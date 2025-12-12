@@ -217,7 +217,7 @@ void camcar(int argc, char *argv[], struct ThreadCommunicationData *ptdat)
         else {
             refresh(); // curses lib: update display
 
-            TBlobSearch blob = read_mutexed_blob(ptdat);
+            blob = read_mutexed_blob(ptdat);
 
             // writeImageWithBlobAsJPEG() seems to have a bug, do not use right now:
             // writeImageWithBlobAsJPEG(blob, "test_blob.jpg", 70);  // this function is for testing (deactivate if not needed)
@@ -306,10 +306,10 @@ void *worker(void *p_thread_data_raw)
 {
   struct ThreadCommunicationData *p_thread_data = (struct ThreadCommunicationData *) p_thread_data_raw;
   const char blob_search_color_rgb[3] = {g_red_color_rgb[0], g_red_color_rgb[1], g_red_color_rgb[2]};  // color to be detected as blob
-  TBlobSearch blob;	// blob object from camera
+  TBlobSearch blob_obj;	// blob object from camera
   while (!p_thread_data->should_exit) {
-    blob = cameraSearchBlob( blob_search_color_rgb ); // search for sign with colored blob
-    assign_mutexed_blob(p_thread_data, blob);
+    blob_obj = cameraSearchBlob( blob_search_color_rgb ); // search for sign with colored blob
+    assign_mutexed_blob(p_thread_data, blob_obj);
 
     p_thread_data->recorded_blob_counter++;
   } // while
