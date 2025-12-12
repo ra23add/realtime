@@ -217,7 +217,7 @@ void camcar(int argc, char *argv[], struct ThreadCommunicationData *ptdat)
         else {
             refresh(); // curses lib: update display
 
-            TBlobSearch block = read_mutexed_blob(ptdat);
+            TBlobSearch blob = read_mutexed_blob(ptdat);
 
             // writeImageWithBlobAsJPEG() seems to have a bug, do not use right now:
             // writeImageWithBlobAsJPEG(blob, "test_blob.jpg", 70);  // this function is for testing (deactivate if not needed)
