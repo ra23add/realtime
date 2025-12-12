@@ -336,6 +336,7 @@ int main (int argc, char *argv[])
   cam_thread_com_data.recorded_blob_counter = 0;
   cam_thread_com_data.should_exit = false;
   pthread_attr_init(&pt_attr);  // pthread: create and init thread attribute
+  pthread_mutex_init(&thread_data_mutex, NULL);
   pthread_create(&cam_thread, &pt_attr, worker, &cam_thread_com_data);
 
   camcar(argc, argv, &cam_thread_com_data);    // start control loop in main thread
