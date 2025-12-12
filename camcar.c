@@ -307,7 +307,7 @@ void *worker(void *p_thread_data_raw)
   struct ThreadCommunicationData *p_thread_data = (struct ThreadCommunicationData *) p_thread_data_raw;
   const char blob_search_color_rgb[3] = {g_red_color_rgb[0], g_red_color_rgb[1], g_red_color_rgb[2]};  // color to be detected as blob
   TBlobSearch blob;	// blob object from camera
-  while (!p_thread_data->should_exit == 0) {
+  while (!p_thread_data->should_exit) {
     blob = cameraSearchBlob( blob_search_color_rgb ); // search for sign with colored blob
     assign_mutexed_blob(p_thread_data, blob);
 
