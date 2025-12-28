@@ -121,17 +121,6 @@ void stop_car_now() {
 }
 
 pthread_mutex_t thread_data_mutex; // mutex to protect thread communication
-int read_mutexed_distance(struct ThreadCommunicationData *data) {
-  pthread_mutex_lock(&thread_data_mutex);
-  int distance_cm = data->ahead_obstacle_distance_cm;
-  pthread_mutex_unlock(&thread_data_mutex);
-  return distance_cm;
-}
-void assign_mutexed_distance(struct ThreadCommunicationData *data, int distance_cm) {
-  pthread_mutex_lock(&thread_data_mutex);
-  data->ahead_obstacle_distance_cm = distance_cm;
-  pthread_mutex_unlock(&thread_data_mutex);
-}
 TBlobSearch read_mutexed_blob(struct ThreadCommunicationData *data) {
     pthread_mutex_lock(&thread_data_mutex);
     TBlobSearch blob_data = data->blob;
@@ -154,16 +143,6 @@ bool is_US_distance_in_range(int distance_cm) {
 }
 
 // Thread function to measure distance with ultrasonic sensor
-void *us_sensor_worker(void *p_thread_data_raw)
-{
-  struct ThreadCommunicationData *pthread_data = (struct ThreadCommunicationData *) p_thread_data_raw;
-  while (!pthread_data->should_exit) {
-    unsigned int distance_to_obj_cm = initio_UsGetDistance();
-    assign_mutexed_distance(pthread_data, distance_to_obj_cm);
-  }
-  return NULL;
-}
-
 void ui_clear_remaining_cursor_line() {
     clrtoeol(); /* Curses: Clears everything from the right of the cursor
                    (inclusive) to blank characters */
