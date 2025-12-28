@@ -183,6 +183,7 @@ void camcar(int argc, char *argv[], struct ThreadCommunicationData *ptdat)
             FSM_US_SENSOR_DIS_TOO_FAR
         } fsm_us_sensor_distance_state; /* Finite State Machine for the ultra sonic sensor distance */
 
+	blob = read_mutexed_blob(ptdat);
         mvprintw(1, 1,"%s: Press 'q' to end program", argv[0]);
         mvprintw(10, 1,"Status: blob(size=%d, halign=%f, recorded_blob_counter=%u)  ", blob.size, blob.halign, ptdat->recorded_blob_counter);
 
@@ -199,7 +200,7 @@ void camcar(int argc, char *argv[], struct ThreadCommunicationData *ptdat)
         else {
             refresh(); // curses lib: update display
 
-            blob = read_mutexed_blob(ptdat);
+            TBlobSearch blob = read_mutexed_blob(ptdat);
 
             // writeImageWithBlobAsJPEG() seems to have a bug, do not use right now:
             // writeImageWithBlobAsJPEG(blob, "test_blob.jpg", 70);  // this function is for testing (deactivate if not needed)
@@ -213,9 +214,9 @@ void camcar(int argc, char *argv[], struct ThreadCommunicationData *ptdat)
                     // TODO: potential actions: turn car or camera platform a few steps around and see if a blob is to be found
                     // TODO: Understand what the above TODO is even talking about / referring to.
                     car_config.spin_left_fn(CAR_BLOB_SEARCH_SPIN_SPEED);
-                    const long spin_wait_usec = 500000; /* 0.5 seconds */
-                    wait_usec(spin_wait_usec);
-                    stop_car_now();
+                    const long spin_wait_usec = 200000; /* 0.2 seconds */
+                    //wait_usec(spin_wait_usec);
+                    //stop_car_now();
                     recorded_blob_counter = ptdat->recorded_blob_counter;
                 }
             } else {
@@ -290,11 +291,13 @@ const uint8_t g_blue_color_rgb[] =  { 0  , 0  , 255 };
 void *worker(void *p_thread_data_raw)
 {
   struct ThreadCommunicationData *p_thread_data = (struct ThreadCommunicationData *) p_thread_data_raw;
-  const uint8_t blob_search_color_rgb[3] = {g_red_color_rgb[0], g_red_color_rgb[1], g_red_color_rgb[2]};  // color to be detected as blob
-  TBlobSearch blob_obj;	// blob object from camera
-  while (!p_thread_data->should_exit) {
-    blob_obj = cameraSearchBlob( blob_search_color_rgb ); // search for sign with colored blob
-    assign_mutexed_blob(p_thread_data, blob_obj);
+  const char blob_search_color_rgb[3] = {g_red_color_rgb[0], g_red_color_rgb[1], g_red_color_rgb[2]};  // color to be detected as blob
+  TBlobSearch blob;	// blob object from camera
+  while (!p_thread_data->should_exit == 0) {
+    blob = cameraSearchBlob( blob_search_color_rgb ); // search for sign with colored blob
+    pthread_mutex_lock(&thread_data_mutex);
+    p_thread_data->blob = blob;
+    pthread_mutex_unlock(&thread_data_mutex);
 
     p_thread_data->recorded_blob_counter++;
   } // while
