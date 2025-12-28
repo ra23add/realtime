@@ -229,12 +229,15 @@ void camcar(int argc, char *argv[], struct ThreadCommunicationData *ptdat)
                         /* TODO: Reconsider the following if-else statements, as the TODO asked for a "useful turn duration", which the following code does not use a "turn duration" */
                         if (blob.halign < 0) {
                             car_config.spin_right_fn(CAR_BLOB_REALIGN_SPINS_SPEED);
+			    mvprintw(5, 1, "Moving right to align");
                         } else {
                             car_config.spin_left_fn(CAR_BLOB_REALIGN_SPINS_SPEED);
+			    mvprintw(5, 1, "Moving left to align");
                         }
                         recorded_blob_counter = ptdat->recorded_blob_counter;
                     }
                 } else {
+		    mvprintw(3, 1, "Using ultra sonic sensor now");
                     us_sensor_distance_cm = initio_UsGetDistance ();
                     if (us_sensor_distance_cm < MIN_DISTANCE_US_SENSOR_CM) {
                         fsm_us_sensor_distance_state = FSM_US_SENSOR_DIST_TOO_CLOSE;
