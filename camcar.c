@@ -58,7 +58,8 @@
 
 /* TODO: Experiment with the following macro value. Must change from 0.15 to a "useful" value. */
 /*   Tolerance/Leeway for the alignment between the car and found blob */
-#define CAR_BLOB_ALIGNED_TOLERANCE 0.15
+//#define CAR_BLOB_ALIGNED_TOLERANCE 0.15
+#define CAR_BLOB_ALIGNED_TOLERANCE 0.5
 #define CAR_BLOB_ALIGNED_MIN_TOLERANCE -CAR_BLOB_ALIGNED_TOLERANCE
 #define CAR_BLOB_ALIGNED_MAX_TOLERANCE CAR_BLOB_ALIGNED_TOLERANCE
 
