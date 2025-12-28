@@ -105,7 +105,7 @@ TBlobSearch cameraSearchBlob(const char color[3])
 
 // imageSearchBlob():
 // Search in an image for the maximum large blob with the given color.
-// If no blob is found, the size is set to zero.
+// If no blob is found, the size is set to sero.
 TBlobSearch imageSearchBlob(const char color[3], TJImage *pimg)
 {
     TBlobSearch blob_res; // return value
