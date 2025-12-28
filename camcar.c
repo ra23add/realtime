@@ -48,8 +48,10 @@
 // behaviour.
 //======================================================================
 
-#define MIN_DISTANCE_US_SENSOR_CM 60
-#define MAX_DISTANCE_US_SENSOR_CM 100
+//#define MIN_DISTANCE_US_SENSOR_CM 60
+//#define MAX_DISTANCE_US_SENSOR_CM 100
+#define MIN_DISTANCE_US_SENSOR_CM 20
+#define MAX_DISTANCE_US_SENSOR_CM 40
 
 /* TODO: Experiment with the following macro value. */
 #define BLOB_MIN_SIZE_THRESHOLD 20
