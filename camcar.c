@@ -48,16 +48,12 @@
 // behaviour.
 //======================================================================
 
-//#define MIN_DISTANCE_US_SENSOR_CM 60
-//#define MAX_DISTANCE_US_SENSOR_CM 100
-#define MIN_DISTANCE_US_SENSOR_CM 40
-#define MAX_DISTANCE_US_SENSOR_CM 60
+#define MIN_DISTANCE_US_SENSOR_CM 60
+#define MAX_DISTANCE_US_SENSOR_CM 100
 
 
-/* TODO: Experiment with the following macro value. */
 #define BLOB_MIN_SIZE_THRESHOLD 30
 
-/* TODO: Experiment with the following macro value. Must change from 0.15 to a "useful" value. */
 /*   Tolerance/Leeway for the alignment between the car and found blob */
 #define CAR_BLOB_ALIGNED_TOLERANCE 0.25
 #define CAR_BLOB_ALIGNED_MIN_TOLERANCE -CAR_BLOB_ALIGNED_TOLERANCE
@@ -65,7 +61,6 @@
 
 /* The speed that the car should spin when in the "searching for blob" state */
 #define CAR_BLOB_SEARCH_SPIN_SPEED 25
-// TODO increase this value to like 25, maybe even 30
 #define CAR_BLOB_REALIGN_SPINS_SPEED 25
 
 #define MAX_DRIVE_SPEED 90
@@ -75,8 +70,6 @@ typedef struct ThreadCommunicationData {
   TBlobSearch blob;	// blob object from camera
   int recorded_blob_counter;		// record blob number (to know that a new image has been produced)
   bool should_exit; /* Boolean variable to keep track of thread termination state */
-  /* TODO: decide whether Ultra Sonic sensor should be multi-threaded (like parSens) or left like the template has given */
-  /* TODO: Based on the above decision, remove the Ultra Sonic threaded related code */
   int ahead_obstacle_distance_cm; /* Distance read from the ultra sonic sensor */
 } ThreadCommunicationData_t;
 
@@ -171,8 +164,6 @@ void ui_clear_remaining_cursor_line() {
                    (inclusive) to blank characters */
 }
 
-/* TODO: Reason the validity of this code (maybe use `delay()` as commented out in the template) */
-/* TODO: Reason the necessity of the function */
 void wait_usec(long timer_usec) {
     /* Blocks the thread execution for at least `timer_usec` microseconds */
     usleep(timer_usec);
@@ -232,8 +223,6 @@ void camcar(int argc, char *argv[], struct ThreadCommunicationData *ptdat)
                 mvprintw(3, 1,"State SB (search blob), blob.size=%d (recorded_blob_counter: %u)", blob.size, ptdat->recorded_blob_counter);
                 ui_clear_remaining_cursor_line(); // curses library
                 if (recorded_blob_counter < ptdat->recorded_blob_counter) {
-                    // TODO: potential actions: turn car or camera platform a few steps around and see if a blob is to be found
-                    // TODO: Understand what the above TODO is even talking about / referring to.
                     car_config.spin_left_fn(CAR_BLOB_SEARCH_SPIN_SPEED);
                     const long spin_wait_usec = 500000; /* 0.5 seconds */
                     wait_usec(spin_wait_usec);
@@ -249,7 +238,6 @@ void camcar(int argc, char *argv[], struct ThreadCommunicationData *ptdat)
                     mvprintw(3, 1,"State AB (align towards blob), blob.size=%d, halign=%f", blob.size, blob.halign);
                     ui_clear_remaining_cursor_line(); // curses library
                     if (recorded_blob_counter < ptdat->recorded_blob_counter) {
-                        /* TODO: Reconsider the following if-else statements, as the TODO asked for a "useful turn duration", which the following code does not use a "turn duration" */
                         if (blob.halign < 0) {
                             car_config.spin_right_fn(CAR_BLOB_REALIGN_SPINS_SPEED);
                         } else {
