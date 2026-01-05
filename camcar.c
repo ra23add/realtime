@@ -60,8 +60,8 @@
 #define CAR_BLOB_ALIGNED_MAX_TOLERANCE CAR_BLOB_ALIGNED_TOLERANCE
 
 /* The speed that the car should spin when in the "searching for blob" state */
-#define CAR_BLOB_SEARCH_SPIN_SPEED 25
-#define CAR_BLOB_REALIGN_SPINS_SPEED 25
+#define CAR_BLOB_SEARCH_SPIN_SPEED 30
+#define CAR_BLOB_REALIGN_SPINS_SPEED 30
 
 #define MAX_DRIVE_SPEED 90
 
