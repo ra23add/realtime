@@ -48,23 +48,27 @@
 // behaviour.
 //======================================================================
 
-#define MIN_DISTANCE_US_SENSOR_CM 60
-#define MAX_DISTANCE_US_SENSOR_CM 100
+//#define MIN_DISTANCE_US_SENSOR_CM 60
+//#define MAX_DISTANCE_US_SENSOR_CM 100
+#define MIN_DISTANCE_US_SENSOR_CM 40
+#define MAX_DISTANCE_US_SENSOR_CM 60
+
 
 /* TODO: Experiment with the following macro value. */
-#define BLOB_MIN_SIZE_THRESHOLD 20
+#define BLOB_MIN_SIZE_THRESHOLD 30
 
 /* TODO: Experiment with the following macro value. Must change from 0.15 to a "useful" value. */
 /*   Tolerance/Leeway for the alignment between the car and found blob */
-#define CAR_BLOB_ALIGNED_TOLERANCE 0.15
+#define CAR_BLOB_ALIGNED_TOLERANCE 0.25
 #define CAR_BLOB_ALIGNED_MIN_TOLERANCE -CAR_BLOB_ALIGNED_TOLERANCE
 #define CAR_BLOB_ALIGNED_MAX_TOLERANCE CAR_BLOB_ALIGNED_TOLERANCE
 
 /* The speed that the car should spin when in the "searching for blob" state */
-#define CAR_BLOB_SEARCH_SPIN_SPEED 10
-#define CAR_BLOB_REALIGN_SPINS_SPEED 5
+#define CAR_BLOB_SEARCH_SPIN_SPEED 25
+// TODO increase this value to like 25, maybe even 30
+#define CAR_BLOB_REALIGN_SPINS_SPEED 25
 
-#define MAX_DRIVE_SPEED 100
+#define MAX_DRIVE_SPEED 90
 
 // data structure to communicate between main thread and camera thread
 typedef struct ThreadCommunicationData {
