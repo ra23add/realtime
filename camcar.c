@@ -74,17 +74,6 @@ typedef struct ThreadCommunicationData {
 } ThreadCommunicationData_t;
 
 pthread_mutex_t mutex_thread_data_camera;
-typedef struct CamThreadCommuncationData {
-    TBlobSearch search_blob;
-    int recorded_blob_counter;
-    bool should_exit;
-} CamThreadCommuncationData_t;
-
-pthread_mutex_t mutex_thread_data_us_sensor;
-typedef struct USSensorThreadCommuncationData {
-    bool should_exit;
-    int ahead_obstacle_distance_cm;
-} USSensorThreadCommuncationData_t;
 
 typedef struct CarConfiguration {
     void (*spin_left_fn)(int8_t);
